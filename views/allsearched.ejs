@@ -1,0 +1,20 @@
+<% include ./partial/header.ejs %>
+    <div class="container mt-3">
+        <% if(alldata.length>0) { %>
+            <% alldata.forEach(function(user){ %>
+                <div class="card mx-3 d-flex" style="flex-direction: row;width: 50%">
+                    <img style="width:50px; height: 50px;object-fit: cover;" src="../images/upload/<%=  user.profilepic[user.profilepic.length -1]  %>" class="card-img-top rounded-circle" alt="..." />
+                    <div class="card-body">
+                     <a href=<%='/searchOnClick/'+user._id %>><h5 class="card-title"><%= user.username %> post</h5></a> 
+                    </div>
+                </div>
+            <% }) %>
+        <% }else{ %>
+            <div class="container">
+                No such username exists
+            </div>
+        <% } %>
+    </div>
+    
+
+<% include ./partial/footer.ejs %>

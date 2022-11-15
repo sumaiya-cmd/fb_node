@@ -1,0 +1,24 @@
+<% include ./partial/header.ejs %>
+    <div class="container mt-5">
+        
+        <div class="container">
+            <% cmnt.reply.forEach(function(reply){ %>
+                <div class="card my-3" style="width: 100%;display: flex; flex-direction: row;">
+                    <img src="../images/upload/<%= reply.author.profilepic[reply.author.profilepic.length -1] %>" style="width: 10%;" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title"><%= reply.author.username %> replied</h5>
+                      <p class="card-text">
+                        <%= reply.reply %>
+                      </p>
+                      <div class="container  d-flex" style="flex-direction: row;justify-content: space-between;">
+                        <a style="width: 15%;text-decoration: none; display: flex; align-items: center;" href=<%='/likereply/'+reply._id %>> <i style="color: red;" class="ri-heart-line"> <%=reply.like.length %>like</i></a>
+                      </div>
+                    </div>
+                  </div>
+            <% })else{ %>
+              <h1>no replies yet</h1>
+          <%  } %>
+        </div>
+    </div>
+    
+<% include ./partial/footer.ejs %>

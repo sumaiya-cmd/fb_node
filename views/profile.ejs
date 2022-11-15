@@ -1,30 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <title>Document</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-light bg-primary">
-      <div
-        style="display: flex; justify-content: space-between"
-        class="container"
-      >
-        <a class="navbar-brand" style="color: #ffff; font-size: 30px" href="#"
-          ><%=userdata.username%> Profile</a
-        >
-        <a href="/logout" class="btn btn-light">Timeline</a>
-        <a href="/logout" class="btn btn-light">logout</a>
+<% include ./partial/header.ejs %>
+
+  <div id="box" style="width: 100%; height:300px;background-position: center;background-size: cover;position: relative;
+  background-image: url(https://media.istockphoto.com/photos/abstract-3d-background-picture-id1182956228?b=1&k=20&m=1182956228&s=170667a&w=0&h=0Us8jpDfFBCdmstUVXzJsmxsU0iioJCX05r1NFq_NtQ=);">
+    <div class="container" ">
+      <img  style="width: 200px ;height: 200px;position: absolute; left: 50%;bottom:-30%;transform: translate(-50%,0);" src='../images/upload/<%= userdata.profilepic[userdata.profilepic.length -1] %>' class="card-img-top rounded-circle mb-5" alt="..." /> <br>
+      <form action="/uploads" method="post" enctype="multipart/form-data" >
+        <input id="choose" type="file" name="image">
+        <input type="submit" value="Upload">
+      </form>
+      <a class="btn btn-primary btn-lg mt-5 mb-3" href="/allpic" role="button">
+        Profilepics
+      </a>
+      
+  </div>
+  </div>
+    
+    <div class="container mt-5  ">
+      
+      <div class="jumbotron">
+        <h1 class="display-4">Hello, <%= userdata.username.charAt(0).toUpperCase()+ userdata.username.substring(1,userdata.username.length)  %></h1>
+        <p class="lead">This is the profile page featuring <%=userdata.username%>.</p>
+        <div class="contain d-flex" style="justify-content: space-between;width: 25%;">
+          <a style="text-decoration: none;" href="/followers/<%= userdata._id %>">Followers</a>
+          <a style="text-decoration: none;" href="/following/<%= userdata._id %>">Following</a>
+        </div>
+        <hr class="my-4">
+        <p>Creating a life, I love..</p>
       </div>
-    </nav>
+      <h3> Upload your story </h3>
+        <form action="/stories" method="post" enctype="multipart/form-data" >
+        <input type="file" name="image">
+        <input type="submit" value="Upload" >
+      </form>
+    </div>
     <div class="container mt-5 d-flex">
     <% if(userdata.posts.length>0){ %>
         <% userdata.posts.forEach(function(post){ %>
@@ -35,9 +43,9 @@
                   <p class="card-text">
                     <%= post.content %>
                   </p>
-                  <a href="#" class="btn btn-primary"><%= post.likes.length %>  likes </a>
-                  <a href="#" class="btn btn-primary">edit</a>
-                  <a href="#" class="btn btn-danger">delete</a>
+                  <a href=<%='/like/'+ post._id %> class="btn btn-primary"><%= post.likes.length %>  likes </a>
+                  <a href=<%= '/edit/'+post._id %> class="btn btn-primary">edit</a>
+                  <a href=<%= '/delete/'+post._id %> class="btn btn-danger">delete</a>
                 </div>
               </div>
        <% })%>
@@ -51,7 +59,7 @@
                   Some quick example text to build on the card title and make up the
                   bulk of the card's content.
                 </p>
-                <a href="#" class="btn btn-primary">likes</a>
+                <a href=<%='#'+userdata._id%> class="btn btn-primary">0 likes</a>
                 <a href="#" class="btn btn-primary">edit</a>
                 <a href="#" class="btn btn-danger">delete</a>
               </div>
@@ -59,6 +67,25 @@
             <h2 style="margin-left: 20px">No posts has been added yet!</h2>
           </div>
     <% } %>
+    
+
+    <% if(userdata.share.length>0){ %>
+      <% userdata.share.forEach(function(post){ %>
+          <div class="card mx-3" style="width: 15rem">
+              <img src="<%= post.user.imageurl %>" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title"><%= post.user.username %> post</h5>
+                <p class="card-text">
+                  <b> <%=userdata.username  %> shared <%= post.user.username %>'s post</b> 
+                </p>
+                <p class="card-text">
+                  <%= post.content %>
+                </p>
+                <a href=<%='/like/'+ post._id %> class="btn btn-primary"><%= post.likes.length %>  likes </a>
+              </div>
+            </div>
+     <% })%>
+  <% } %>
     </div>
     <div class="container mt-5">
       <form method="post" action="/createpost">
@@ -85,10 +112,5 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+
+    <% include ./partial/footer.ejs %>

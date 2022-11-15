@@ -1,0 +1,24 @@
+<% include ./partial/header.ejs %>
+    <div class="container mt-5">
+        
+        <div class="container">
+            <% if(founduser.following.length>0){ %>
+                <% founduser.following.forEach(function(fllw){ %>
+                    <div class="card my-3" style="width: 100%;display: flex; flex-direction: row;">
+                        <img src="../images/upload/<%= fllw.profilepic[fllw.profilepic.length -1] %>" style="width: 100px;height: 100px;" class="card-img-top rounded-circle" alt="..." />
+                        <div class="card-body">
+                          <h5 class="card-title"><%= fllw.username %> Post</h5>
+                          
+                        </div>
+                      </div>
+                <% }) %>
+            <% }else{ %>
+                    <div class="container">
+                        No following yet!
+                    </div>
+            <%} %>
+            
+        </div>
+    </div>
+    
+<% include ./partial/footer.ejs %>

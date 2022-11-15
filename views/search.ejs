@@ -1,0 +1,69 @@
+<% include ./partial/header.ejs %>
+
+        <div class="container py-5">
+            <% if(userdata===null){ %>
+                <h2>NO such username exists</h2>
+        <% } else{ %>
+                <div class="container">
+                  <img style="width: 20%;" src="../images/upload/<%= userdata.profilepic[userdata.profilepic.length -1] %>" alt="">
+                  <div class="jumbotron">
+                    <h1 class="display-4">Hello, <%= userdata.username.charAt(0).toUpperCase()+ userdata.username.substring(1,userdata.username.length)  %></h1>
+                    <p class="lead">This is the profile page featuring <%=userdata.username%>.</p>
+                    <div class="contain d-flex" style="justify-content: space-between;width: 25%;">
+                      <a style="text-decoration: none;" href="/followers/<%= userdata._id %>">Followers</a>
+                      <a style="text-decoration: none;" href="/following/<%= userdata._id %>">Following</a>
+                    </div>
+                    <hr class="my-4">
+                    <p>Creating a life, I love.</p>
+                    <p class="lead"> 
+                      
+                     <% if(userdata.followers.indexOf(loginuser._id)===-1){ %>
+                      <a class="btn btn-primary btn-lg" href="/follow/<%= userdata._id %>" role="button">follow </a>
+                    <% }else{ %>
+                      <a class="btn btn-primary btn-lg" href="/unfollow/<%= userdata._id %>" role="button">unfollow</a>
+                    <% } %>
+                      
+                    </p>
+                  </div>
+                </div>
+                  <div class="container mt-5 d-flex">
+                <% if(userdata.posts.length>0){ %>
+                    <% userdata.posts.forEach(function(post){ %>
+                        <div class="card mx-3" style="width: 15rem">
+                            <img src="<%= post.imageurl %>" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                              <div class="container d-flex" style="justify-content:space-between;">
+                                <h5 class="card-title"><%= userdata.username %> post</h5>
+                                <a style="text-decoration: none;color: black;font-size: 20px;" href="/share/<%= post._id %>"><i class="ri-share-fill"></i></a>
+                              </div>
+                              <p class="card-text">
+                                <%= post.content %>
+                              </p>
+                              <a href= <%='/like/'+ post._id %>  class="btn btn-primary"><%= post.likes.length %>  likes </a>
+                            </div>
+                          </div>
+                   <% })%>
+                <% } else{ %>
+                    <div class="container mt-5 d-flex">
+                        <div class="card mx-3" style="width: 15rem">
+                          <img src="..." class="card-img-top" alt="..." />
+                          <div class="card-body">
+                            <div class="container">
+                              <h5 class="card-title"><%= userdata.username %> post</h5>
+                              <a style="text-decoration: none;color: black;font-size: 20px;" href=""><i class="ri-share-fill"></i></a>
+                            </div>
+                            
+                            <p class="card-text">
+                              Some quick example text to build on the card title and make up the
+                              bulk of the card's content.
+                            </p>
+                          </div>
+                        </div>
+                        <h2 style="margin-left: 20px">No posts </h2>
+                      </div>
+                <% } %>
+                </div>
+        <% } %>
+        </div>
+
+<% include ./partial/footer.ejs %>

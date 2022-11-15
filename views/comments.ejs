@@ -1,0 +1,22 @@
+<% include ./partial/header.ejs %>
+    <div class="container">
+        <% posts.comments.forEach(function(cmnt){ %>
+            <div class="card my-3" style="width: 100%;display: flex; flex-direction: row;">
+                <img src="../images/upload/<%= cmnt.writer.profilepic[cmnt.writer.profilepic.length -1] %>" style="width: 10%;" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title"><%= cmnt.writer.username %> comment</h5>
+                  <p class="card-text">
+                    <%= cmnt.comments %>
+                  </p>
+                  <p class="card-text">
+                    <%= cmnt.Date %>
+                  </p>
+                  <div class="container  d-flex" style="flex-direction: row;justify-content: space-between;">
+                    <a style="width: 15%;text-decoration: none; display: flex; align-items: center;" href=<%='/likecmnt/'+cmnt._id %>> <i style="color: red;" class="ri-heart-line"> <%=cmnt.like.length %>like</i></a>
+                    <a style="width: 10%;margin-bottom: 5px;text-decoration: none; display: flex; align-items: center;" href="/reply/<%= cmnt._id %>">  reply</a>
+                  </div>
+                </div>
+              </div>
+        <% }) %>
+    </div>
+<% include ./partial/footer.ejs %>

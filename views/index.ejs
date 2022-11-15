@@ -1,29 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <hr>
-  <h1>register here</h1>
-  <form action="/register" method="post"> <br> <br>
-    <input type="text" placeholder="username" name="username"> <br> <br>
-    <input type="text" placeholder="name" name="name"> <br> <br>
-    <input type="password" placeholder="password" name="password"> <br> <br>
-    <input type="submit" >
-  </form>
-    <br>
-    <br>
-    <hr>
-    <hr>
-    <h1>login here</h1>
-    <form action="/login" method="post">
-      <input type="text" placeholder="username" name="username"> <br> <br>
-      <input type="password" placeholder="password" name="password"> <br> <br>
-      <input type="submit" >
-    </form>
-</body>
-</html>
+
+<% include ./partial/header.ejs %>
+
+    <form method="post" action="/login" style="width: 50%; box-shadow: 0px 0px 20px rgb(207, 207, 207); margin-top: 20px;
+    padding: 20px; border-radius: 10px; background-color: rgb(246, 249, 255); position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);">
+
+      <h1 >Login Here</h1>
+
+      <div class="mt-4" >
+        <label for="exampleInputusername1" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="exampleInputusername1" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mt-4" >
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+
+      <div class="mt-4">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+        <a href="/reset" style="text-decoration: none;" >forget password ?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-4">Submit</button>
+
+    </form> 
+
+    <a href="/register" style= "bottom:10%; position: absolute;left: 50%;transform: translate(-50%,0);text-decoration: none;font-size: 20px;" >Create new account?</a>
+
+<% include ./partial/footer.ejs %>
+
+
+

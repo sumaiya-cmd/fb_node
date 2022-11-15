@@ -1,0 +1,64 @@
+<% include ./partial/header.ejs %>
+
+    <div class="container mt-5 ">
+        <% if(posts.length>0){ %>
+            <% posts.forEach(function(post){ %>
+                <div class="card mx-3 mt-5 "  style="width: 100%; display: flex; flex-direction: row; justify-content: space-between;">
+                    <img src="<%= post.imageurl %>" class="card-img-top " style="width: 200px; height: 200px;" alt="..." />
+                    <div class="card-body ">
+                      <div class="container d-flex " style="justify-content: space-between;">
+                        <h5 class="card-title"><%= post.user.username %> post</h5>
+                        <a style="text-decoration: none;color: black;font-size: 20px;" href="/share/<%= post._id %>"><i class="ri-share-fill"></i></a>
+                      </div>
+                      <p class="card-text">
+                        <%= post.content %>
+                      </p>
+                      <a href=<%='/like/'+ post._id %> class="btn btn-primary"><%= post.likes.length %>  likes </a>
+                      <form style="margin-top: 5px;" action="/comment/<%= post._id %>" method="post">
+                          <input type="text" name="comments" placeholder="write your comment.. ">
+                          <input type="submit" value="send">
+                      </form>
+                        <% if(post.comments.length>=2 ){ %>
+                            <% for(var i=0;i<2 ;i++) { %>
+                              <b> <%=post.comments[i].writer.username %></b> <%= post.comments[i].comments %> <br>
+                              <%=post.comments[i].Date %> <br>
+                              <div class="container d-flex">
+                                <a style="width: 10%;margin-bottom: 5px;text-decoration: none; display: flex; align-items: center;" href=<%='/likecmnt/'+post.comments[i]._id %>> <i style="color: red;" class="ri-heart-line"> <%=post.comments[i].like.length %>like</i></a>
+                                <a style="width: 10%;margin-bottom: 5px;text-decoration: none; display: flex; align-items: center;" href="/reply/<%= post.comments[i]._id %>">  reply</a>
+                              </div>
+                           <% }%>
+                           <br><a href=<%='/allcmnt/'+post._id %> style="text-decoration: none;"> view all comments </a>
+                        <% }else if(post.comments.length>0 && post.comments.length<=2){ %>
+                              <% post.comments.forEach(function(cmnt){ %>
+                                <b> <%=cmnt.writer.username %></b> <%= cmnt.comments %> <br>
+                                <%=cmnt.Date %> <br>
+                                <div class="container d-flex">
+                                  <a style="width: 10%;margin-bottom: 5px;text-decoration: none; display: flex; align-items: center;" href=<%='/likecmnt/'+cmnt._id %>> <i style="color: red;" class="ri-heart-line"> <%=cmnt.like.length %>like</i></a>
+                                  <form action='/reply/<%= cmnt._id %>' method="post">
+                                    <input style="height: 23px ;" name="reply" type="text" placeholder="reply">
+                                  </form>
+                                </div>
+                                <div class="container" style="width: 90%;margin-left: 10%;">
+                                  <% if(cmnt.reply.length>0){ %>
+                                      <a style="text-decoration: none;" href="/showreply/<%= cmnt._id %>">View all <%= cmnt.reply.length %> reply </a>
+                                 <% }else{ %>
+                                  <a style="text-decoration: none;" href="#">0 reply </a>
+                                 <% } %>
+                                 </div>
+                                <br> 
+                               <% }) %>
+                               <br><a href=<%='/allcmnt/'+post._id %> style="text-decoration: none;"> view all comments </a>
+                       <% }else{ %>
+                              no commnets yet!
+                       <%} %>    
+                    </div>
+                  </div>
+           <% })%>
+        <% } else{ %>
+            <div class="container mt-5 d-flex">
+                <h2>No posts yet</h2>
+              </div>
+        <% } %>
+      </div>
+
+<% include ./partial/footer.ejs %>
